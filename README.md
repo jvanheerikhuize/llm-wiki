@@ -80,3 +80,9 @@ See [`PLAN.md`](PLAN.md) for the research and plan, and
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Roadmap
+
+ASDLC knowledge base is maintained in sync with [asdlc/.asdlc/knowledge](https://github.com/jvanheerikhuize/asdlc/tree/main/.asdlc). See asdlc roadmap for framework knowledge evolution.
+
+---
