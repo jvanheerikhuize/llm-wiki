@@ -13,7 +13,7 @@ from typing import Any
 
 import yaml
 
-# tools/ lives directly under the KB root (.asdlc/knowledge/).
+# tools/ lives directly under the KB root (knowledge/).
 KB_ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = KB_ROOT / "manifest.yaml"
 

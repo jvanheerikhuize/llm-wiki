@@ -21,7 +21,7 @@ description: >
   interlinked markdown wiki, and kept honest with confidence scoring and
   fact-checking.
 
-# Paths are relative to this manifest's directory (.asdlc/knowledge).
+# Paths are relative to this manifest's directory (knowledge/).
 paths:
   inbox: inbox        # drop-zone: files land here, `kb ingest` empties it into raw/
   raw: raw            # immutable source-of-truth documents (incl. binaries)

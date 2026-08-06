@@ -12,7 +12,7 @@ consistent. Nothing runs as a service. The whole system is four moving parts:
 4. **The toolchain** — `kb` CLI + ingestion adapters, plus the `AGENTS.md` contract.
 
 ```
-.asdlc/knowledge/
+knowledge/
 ├── manifest.yaml         # (1) single source of truth
 ├── AGENTS.md             # agent entry point / contract
 ├── index.md              # catalog (generated blocks)

@@ -9,7 +9,7 @@ pattern. Hard requirements (from the original goal):
 2. Scaffolds from a **single source of truth**; scaffolder triggerable from a pipeline/action.
 3. File-based — no infrastructure.
 4. Closest to current industry standards.
-5. Lives in `.asdlc/knowledge`.
+5. Lives in `knowledge`.
 6. A single point of entry for an agent.
 7. Solution- and agent-agnostic.
 8. An ingestion layer for binaries, behind an interface.
@@ -67,7 +67,7 @@ whose prose contract for agents lives beside it in `AGENTS.md` (6).
 | 2 | Single source of truth + scaffolder in pipeline | `manifest.yaml` → `kb scaffold`; `azure-pipelines.yml` (ScaffoldDrift) / `.github/workflows/scaffold.yml` |
 | 3 | File-based, no infra | Only files; CLI is stdlib + PyYAML |
 | 4 | Industry standard | AGENTS.md, JSON Schema, frontmatter/wikilinks, MarkItDown/Docling, MkDocs Material |
-| 5 | Lives in `.asdlc/knowledge` | Entire KB rooted there |
+| 5 | Lives in `knowledge` | Entire KB rooted there |
 | 6 | Single agent entry point | `AGENTS.md` |
 | 7 | Solution/agent-agnostic | Vendor-neutral AGENTS.md; adapters/CLI are generic |
 | 8 | Binary ingestion interface | `ingest/adapters/` `IngestAdapter` protocol; `kb ingest` |

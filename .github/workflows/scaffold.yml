@@ -5,8 +5,8 @@ name: scaffold
 on:
   push:
     paths:
-      - ".asdlc/knowledge/manifest.yaml"
-      - ".asdlc/knowledge/tools/scaffold.py"
+      - "knowledge/manifest.yaml"
+      - "knowledge/tools/scaffold.py"
   workflow_dispatch:
 
 jobs:
@@ -19,11 +19,11 @@ jobs:
           python-version: "3.12"
       - run: pip install pyyaml
       - name: Regenerate from manifest
-        working-directory: .asdlc/knowledge
+        working-directory: knowledge
         run: python3 tools/kb.py scaffold
       - name: Fail if generated artifacts drifted
         run: |
-          if ! git diff --exit-code -- .asdlc/knowledge/_schema .asdlc/knowledge/_templates; then
+          if ! git diff --exit-code -- knowledge/_schema knowledge/_templates; then
             echo "::error::Generated schema/templates are out of date. Run 'kb scaffold' and commit."
             exit 1
           fi

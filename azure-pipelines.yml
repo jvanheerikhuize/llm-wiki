@@ -42,7 +42,7 @@ pool:
 
 variables:
   pythonVersion: "3.12"
-  kbDir: ".asdlc/knowledge"
+  kbDir: "knowledge"
 
 stages:
   - stage: Validate

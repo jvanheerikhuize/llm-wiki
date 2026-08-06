@@ -5,7 +5,7 @@ implementing Andrej Karpathy's ["LLM wiki"](https://gist.github.com/karpathy/442
 pattern: knowledge is *compiled once* into an interlinked markdown wiki and kept
 current by an agent — rather than re-derived from scratch on every query (RAG).
 
-Everything lives in [`.asdlc/knowledge/`](.asdlc/knowledge/). It is plain files —
+Everything lives in [`knowledge/`](knowledge/). It is plain files —
 no database, no server, no infrastructure. Humans read it in any editor or on
 GitHub; agents read and maintain it through one entry point.
 
@@ -22,23 +22,23 @@ sourced, and trustworthy over time.
 
 | Path | Role |
 |------|------|
-| `.asdlc/knowledge/manifest.yaml` | **Single source of truth.** Defines page types, fields, confidence policy, ingestion + viz config. |
-| `.asdlc/knowledge/AGENTS.md` | **Single entry point** for any agent — vendor-neutral contract of how to read/write the KB. |
-| `.asdlc/knowledge/index.md` | Human/agent catalog, auto-rebuilt from page frontmatter. |
-| `.asdlc/knowledge/log.md` | Append-only change log. |
-| `.asdlc/knowledge/inbox/` | Drop-zone for new files. `kb ingest` (no args) empties it into `raw/`. |
-| `.asdlc/knowledge/raw/` | Immutable ingested source artifacts. Never edited. |
-| `.asdlc/knowledge/wiki/` | The LLM-maintained wiki: `sources/`, `entities/`, `concepts/`. |
-| `.asdlc/knowledge/_schema/` | JSON Schema generated from the manifest. |
-| `.asdlc/knowledge/_templates/` | Page templates generated from the manifest. |
-| `.asdlc/knowledge/ingest/` | Pluggable binary-ingestion adapters (plaintext, MarkItDown, Docling). |
-| `.asdlc/knowledge/tools/` | The `kb` CLI — the interaction interface. |
+| `knowledge/manifest.yaml` | **Single source of truth.** Defines page types, fields, confidence policy, ingestion + viz config. |
+| `knowledge/AGENTS.md` | **Single entry point** for any agent — vendor-neutral contract of how to read/write the KB. |
+| `knowledge/index.md` | Human/agent catalog, auto-rebuilt from page frontmatter. |
+| `knowledge/log.md` | Append-only change log. |
+| `knowledge/inbox/` | Drop-zone for new files. `kb ingest` (no args) empties it into `raw/`. |
+| `knowledge/raw/` | Immutable ingested source artifacts. Never edited. |
+| `knowledge/wiki/` | The LLM-maintained wiki: `sources/`, `entities/`, `concepts/`. |
+| `knowledge/_schema/` | JSON Schema generated from the manifest. |
+| `knowledge/_templates/` | Page templates generated from the manifest. |
+| `knowledge/ingest/` | Pluggable binary-ingestion adapters (plaintext, MarkItDown, Docling). |
+| `knowledge/tools/` | The `kb` CLI — the interaction interface. |
 
 ## Quickstart
 
 ```bash
 pip install -e ".[all]"          # or just: pip install pyyaml
-cd .asdlc/knowledge
+cd knowledge
 
 python3 tools/kb.py scaffold      # regenerate schema + templates from manifest
 python3 tools/kb.py new <type> <id> [--title "..."]  # stamp a new page from its template

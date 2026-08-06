@@ -8,7 +8,7 @@ venv/
 
 # MkDocs build output
 site/
-.asdlc/knowledge/site/
+knowledge/site/
 
 # OS / editor
 .DS_Store
@@ -21,6 +21,6 @@ site/
 
 # Ingestion drop-zone: files staged for ingest are not committed until they
 # have been converted and moved into raw/. Keep the folder itself tracked.
-.asdlc/knowledge/inbox/*
-!.asdlc/knowledge/inbox/README.md
-!.asdlc/knowledge/inbox/.gitkeep
+knowledge/inbox/*
+!knowledge/inbox/README.md
+!knowledge/inbox/.gitkeep

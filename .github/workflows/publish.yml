@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - ".asdlc/knowledge/**"
+      - "knowledge/**"
   workflow_dispatch:
 
 permissions:
@@ -27,14 +27,14 @@ jobs:
           python-version: "3.12"
       - run: pip install pyyaml mkdocs-material pymdown-extensions mkdocs-redirects
       - name: Regenerate viz config + graph
-        working-directory: .asdlc/knowledge
+        working-directory: knowledge
         run: python3 tools/kb.py viz
       - name: Build site
-        working-directory: .asdlc/knowledge
+        working-directory: knowledge
         run: mkdocs build --strict --site-dir site
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .asdlc/knowledge/site
+          path: knowledge/site
 
   deploy:
     needs: build
