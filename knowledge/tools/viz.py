@@ -144,15 +144,15 @@ def build_graph_data(m: dict) -> dict:
 # through verbatim; the Mermaid fence stays outside so it still renders.
 _VIEW_TEMPLATE = """<div class="kb-graph">
 <style>
-.kb-view-toggle{display:flex;gap:.4rem;margin:.2rem 0 .8rem}
-.kb-view-toggle button{font:inherit;cursor:pointer;padding:.35rem .8rem;border-radius:.4rem;border:1px solid var(--md-default-fg-color--lighter,#8888);background:transparent;color:inherit}
-.kb-view-toggle button.kb-active{background:var(--md-accent-fg-color,#3b82f6);color:#fff;border-color:transparent}
-#kb-graph-3d{width:100%;height:560px;border:1px solid var(--md-default-fg-color--lightest,#8883);border-radius:.5rem;overflow:hidden}
+.kb-view-toggle{display:flex;align-items:center;gap:var(--space-2,.5rem);margin:.2rem 0 .8rem;flex-wrap:wrap}
+.kb-view-toggle .kb-spec-link{margin-left:auto;text-decoration:none}
+#kb-graph-3d{width:100%;height:560px;border:1px solid var(--color-border,var(--md-default-fg-color--lightest,#8883));border-radius:var(--radius-md,.5rem);overflow:hidden;background:var(--color-surface,transparent)}
 #kb-graph-3d .kb-msg{padding:1rem;opacity:.8}
 </style>
-<div class="kb-view-toggle" role="tablist">
-<button id="kb-btn-2d" class="kb-active" type="button" onclick="kbShowView('2d')">2D · Mermaid</button>
-<button id="kb-btn-3d" type="button" onclick="kbShowView('3d')">3D · Force graph</button>
+<div class="kb-view-toggle" role="tablist" aria-label="Graph view mode">
+<ui-chip id="kb-btn-2d" variant="accent" pressed onclick="kbShowView('2d')">2D · Mermaid</ui-chip>
+<ui-chip id="kb-btn-3d" variant="accent" onclick="kbShowView('3d')">3D · Force graph</ui-chip>
+<a class="kb-spec-link" href="specs/"><ui-badge variant="info">Spec Dashboard →</ui-badge></a>
 </div>
 <div id="kb-graph-3d" style="display:none"></div>
 <script id="kb-graph-data" type="application/json">__GRAPH_DATA__</script>
@@ -163,8 +163,8 @@ _VIEW_TEMPLATE = """<div class="kb-graph">
   var pre=document.querySelector('pre.mermaid');
   var box=document.getElementById('kb-graph-3d');
   var b2=document.getElementById('kb-btn-2d'),b3=document.getElementById('kb-btn-3d');
-  if(v==='3d'){ if(pre)pre.style.display='none'; box.style.display='block'; b3.classList.add('kb-active'); b2.classList.remove('kb-active'); kbInit(box); }
-  else { if(pre)pre.style.display=''; box.style.display='none'; b2.classList.add('kb-active'); b3.classList.remove('kb-active'); }
+  if(v==='3d'){ if(pre)pre.style.display='none'; box.style.display='block'; b3.setAttribute('pressed',''); b2.removeAttribute('pressed'); kbInit(box); }
+  else { if(pre)pre.style.display=''; box.style.display='none'; b2.setAttribute('pressed',''); b3.removeAttribute('pressed'); }
  };
  function kbInit(box){
   if(g){ g.width(box.clientWidth); return; }
@@ -272,9 +272,12 @@ markdown_extensions:
 extra_javascript:
   # Powers the homepage 3D view (global ForceGraph3D); bundles three.js.
   - https://cdn.jsdelivr.net/npm/3d-force-graph@1
+  - path: https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js
+    type: module
 extra_css:
   # Icons for the nav page-status markers (see `extra.status` below). Generated
   # into wiki/assets/status.css by `python tools/kb.py viz`.
+  - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/tokens.css
   - assets/status.css
 extra:
   # Page-status markers: Material renders a small icon + hover tooltip next to a

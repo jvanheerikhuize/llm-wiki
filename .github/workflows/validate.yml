@@ -1,12 +1,5 @@
 name: validate
 
-# Deterministic health check on every PR and on main.
-# (push is scoped to main so PR branches don't run the same lint twice.)
-#
-# The weekly `schedule` matters even though nothing changes on a cron run:
-# staleness is time-relative, so `verified_max_age_days` / `stale_after_days`
-# only trip as the clock advances. Without a scheduled run a page silently ages
-# past its window and nobody hears about it until the next push.
 on:
   push:
     branches: [main]
@@ -24,11 +17,15 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyyaml jsonschema
+      - name: Validate epistemic specification records via Spec-Blueprint
+        run: |
+          VER=$(grep -i '^Spec-Blueprint:' TECH_STACK.md | sed -E 's/.*asdlc-meta-specs@([A-Za-z0-9._-]+).*/\1/' || true)
+          VER=${VER:-latest}
+          curl -fsSL "https://jvanheerikhuize.github.io/asdlc-meta-specs/${VER}/tools/spec.py" -o /tmp/spec.py
+          python3 /tmp/spec.py --root . check --strict
       - name: kb lint --strict
-        working-directory: .asdlc/knowledge
+        working-directory: knowledge
         run: python3 tools/kb.py lint --strict
-      # Triage view of which pages are due for re-verification. Informational on
-      # push/PR; the weekly cron is what surfaces newly-stale pages over time.
       - name: kb verify --all
-        working-directory: .asdlc/knowledge
+        working-directory: knowledge
         run: python3 tools/kb.py verify --all
