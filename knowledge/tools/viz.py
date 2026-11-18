@@ -144,15 +144,17 @@ def build_graph_data(m: dict) -> dict:
 # through verbatim; the Mermaid fence stays outside so it still renders.
 _VIEW_TEMPLATE = """<div class="kb-graph">
 <style>
+.kb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:var(--space-3,.75rem);margin:0 0 var(--space-4,1rem)}
 .kb-view-toggle{display:flex;align-items:center;gap:var(--space-2,.5rem);margin:.2rem 0 .8rem;flex-wrap:wrap}
 .kb-view-toggle .kb-spec-link{margin-left:auto;text-decoration:none}
 #kb-graph-3d{width:100%;height:560px;border:1px solid var(--color-border,var(--md-default-fg-color--lightest,#8883));border-radius:var(--radius-md,.5rem);overflow:hidden;background:var(--color-surface,transparent)}
 #kb-graph-3d .kb-msg{padding:1rem;opacity:.8}
 </style>
+__KPI_STRIP__
 <div class="kb-view-toggle" role="tablist" aria-label="Graph view mode">
 <ui-chip id="kb-btn-2d" variant="accent" pressed onclick="kbShowView('2d')">2D · Mermaid</ui-chip>
 <ui-chip id="kb-btn-3d" variant="accent" onclick="kbShowView('3d')">3D · Force graph</ui-chip>
-<a class="kb-spec-link" href="specs/"><ui-badge variant="info">Spec Dashboard →</ui-badge></a>
+<a class="kb-spec-link" href="specs/"><ui-badge variant="accent">Spec Dashboard →</ui-badge></a>
 </div>
 <div id="kb-graph-3d" style="display:none"></div>
 <script id="kb-graph-data" type="application/json">__GRAPH_DATA__</script>
@@ -193,9 +195,21 @@ _VIEW_TEMPLATE = """<div class="kb-graph">
 
 
 def build_views(m: dict) -> str:
-    """Toggle + 3D container (raw HTML) followed by the Mermaid 2D fence."""
-    data = json.dumps(build_graph_data(m), separators=(",", ":"))
-    return _VIEW_TEMPLATE.replace("__GRAPH_DATA__", data) + "\n\n" + build_graph(m)
+    """KPI strip + Toggle + 3D container (raw HTML) followed by the Mermaid 2D fence."""
+    gdata = build_graph_data(m)
+    pages = list(iter_pages(m))
+    verified = sum(1 for p in pages if p.frontmatter.get("status") == "verified")
+    avg_conf = round(sum(float(p.frontmatter.get("confidence", 0.0) or 0.0) for p in pages) / max(1, len(pages)), 2)
+    kpi = (
+        f'<div class="kb-stats">'
+        f'<ui-stat-tile value="{len(pages)}" label="Wiki Pages" status="done" variant="accent"></ui-stat-tile>'
+        f'<ui-stat-tile value="{verified}" label="Verified Pages" status="done" variant="success"></ui-stat-tile>'
+        f'<ui-stat-tile value="{len(gdata["links"])}" label="Wikilink Edges" status="info" variant="neutral"></ui-stat-tile>'
+        f'<ui-stat-tile value="{avg_conf}" label="Mean Confidence" status="done" variant="success"></ui-stat-tile>'
+        f'</div>'
+    )
+    data = json.dumps(gdata, separators=(",", ":"))
+    return _VIEW_TEMPLATE.replace("__KPI_STRIP__", kpi).replace("__GRAPH_DATA__", data) + "\n\n" + build_graph(m)
 
 
 def build_table(m: dict) -> str:
@@ -223,7 +237,11 @@ def build_mkdocs(m: dict) -> str:
     wiki = KB_ROOT / m["paths"]["wiki"]
     # Enumerate real files so `mkdocs build --strict` never sees an unlisted page.
     # index.md is the homepage MkDocs serves at the site root.
-    nav = ["  - Overview: index.md", "  - Tags: tags.md"]
+    nav = [
+        "  - Overview: index.md",
+        "  - Tags: tags.md",
+        "  - Spec Dashboard: https://jvanheerikhuize.github.io/llm-wiki/specs/",
+    ]
     for tspec in m["page_types"].values():
         folder = tspec["folder"]
         files = sorted((wiki / folder).glob("*.md"))
@@ -259,10 +277,10 @@ theme:
   name: material
   features: [navigation.instant, navigation.top, search.suggest, content.code.copy]
   palette:
-    - scheme: default
-      toggle: {{icon: material/brightness-7, name: dark}}
     - scheme: slate
-      toggle: {{icon: material/brightness-4, name: light}}
+      toggle: {{icon: material/brightness-4, name: Switch to light mode}}
+    - scheme: default
+      toggle: {{icon: material/brightness-7, name: Switch to dark mode}}
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
@@ -278,6 +296,7 @@ extra_css:
   # Icons for the nav page-status markers (see `extra.status` below). Generated
   # into wiki/assets/status.css by `python tools/kb.py viz`.
   - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/tokens.css
+  - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/mkdocs-theme.css
   - assets/status.css
 extra:
   # Page-status markers: Material renders a small icon + hover tooltip next to a

@@ -6,10 +6,10 @@ theme:
   name: material
   features: [navigation.instant, navigation.top, search.suggest, content.code.copy]
   palette:
-    - scheme: default
-      toggle: {icon: material/brightness-7, name: dark}
     - scheme: slate
-      toggle: {icon: material/brightness-4, name: light}
+      toggle: {icon: material/brightness-4, name: Switch to light mode}
+    - scheme: default
+      toggle: {icon: material/brightness-7, name: Switch to dark mode}
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
@@ -25,6 +25,7 @@ extra_css:
   # Icons for the nav page-status markers (see `extra.status` below). Generated
   # into wiki/assets/status.css by `python tools/kb.py viz`.
   - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/tokens.css
+  - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/mkdocs-theme.css
   - assets/status.css
 extra:
   # Page-status markers: Material renders a small icon + hover tooltip next to a
@@ -67,6 +68,7 @@ hooks:
 nav:
   - Overview: index.md
   - Tags: tags.md
+  - Spec Dashboard: https://jvanheerikhuize.github.io/llm-wiki/specs/
   - Sources:
       - "ASDLC Knowledge Base \u2014 README": sources/asdlc-knowledge-readme.md
       - "Billion-scale Similarity Search with GPUs": sources/faiss-johnson-2017.md
