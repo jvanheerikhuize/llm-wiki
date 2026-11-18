@@ -19,9 +19,12 @@ markdown_extensions:
 extra_javascript:
   # Powers the homepage 3D view (global ForceGraph3D); bundles three.js.
   - https://cdn.jsdelivr.net/npm/3d-force-graph@1
+  - path: https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js
+    type: module
 extra_css:
   # Icons for the nav page-status markers (see `extra.status` below). Generated
   # into wiki/assets/status.css by `python tools/kb.py viz`.
+  - https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/tokens.css
   - assets/status.css
 extra:
   # Page-status markers: Material renders a small icon + hover tooltip next to a
