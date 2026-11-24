@@ -15,7 +15,7 @@ Nodes colored by confidence band, and every node is a link. Use the **2D / 3D** 
 #kb-graph-3d .kb-msg{padding:1rem;opacity:.8}
 </style>
 <div class="kb-stats"><ui-stat-tile value="44" label="Wiki Pages" status="done" variant="accent"></ui-stat-tile><ui-stat-tile value="15" label="Verified Pages" status="done" variant="success"></ui-stat-tile><ui-stat-tile value="199" label="Wikilink Edges" status="info" variant="neutral"></ui-stat-tile><ui-stat-tile value="0.66" label="Mean Confidence" status="done" variant="success"></ui-stat-tile></div>
-<div class="kb-view-toggle" role="tablist" aria-label="Graph view mode">
+<div class="kb-view-toggle" role="group" aria-label="Graph view mode">
 <ui-chip id="kb-btn-2d" variant="accent" pressed onclick="kbShowView('2d')">2D · Mermaid</ui-chip>
 <ui-chip id="kb-btn-3d" variant="accent" onclick="kbShowView('3d')">3D · Force graph</ui-chip>
 <a class="kb-spec-link" href="specs/"><ui-badge variant="accent">Spec Dashboard →</ui-badge></a>
