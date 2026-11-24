@@ -21,6 +21,8 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/3d-force-graph@1
   - path: https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js
     type: module
+  # Mirrors Material's light/dark palette onto the design tokens.
+  - assets/theme-sync.js
 extra_css:
   # Icons for the nav page-status markers (see `extra.status` below). Generated
   # into wiki/assets/status.css by `python tools/kb.py viz`.

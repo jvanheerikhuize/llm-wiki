@@ -15,7 +15,7 @@ Design-System: asdlc-meta-designsystem@latest
 | **Manifest & Schema** | **`knowledge/manifest.yaml`** -> **`knowledge/_schema/frontmatter.schema.json`** | Single source of truth generating Draft 2020-12 JSON Schema and page templates (`knowledge/_templates/*.md`). |
 | **Binary Ingestion Adapters** | **`plaintext`** (stdlib), **`markitdown`** (Microsoft MarkItDown), **`docling`** (IBM Docling) | Pluggable extraction pipeline (`knowledge/ingest/adapters/`) converting raw documents into SHA-256-linked `wiki/sources/*.md` pages. |
 | **Static Site Visualization** | **`mkdocs-material`** + **`pymdown-extensions`** + **`mkdocs-redirects`** + **`3d-force-graph`** | Primary static knowledge graph and searchable wiki published to GitHub Pages root (`/`). |
-| **Design System & Spec Dashboard** | **ASDLC Meta-DesignSystem** (`asdlc-meta-designsystem@latest`) + **ASDLC Meta-Specs** (`asdlc-meta-specs@latest`) | `<ui-chip>` 2D/3D graph view switcher and tokens in `knowledge/wiki/index.md` + bolted-on specification dashboard at `/specs/`. |
+| **Design System & Spec Dashboard** | **ASDLC Meta-DesignSystem** (`asdlc-meta-designsystem@latest`) + **ASDLC Meta-Specs** (`asdlc-meta-specs@latest`) | `<ui-stat-tile>` KPI strip, `<ui-chip>` 2D/3D graph view switcher and `<ui-badge>` in `knowledge/wiki/index.md`; `tokens.css` and `mkdocs-theme.css` site-wide, with `assets/theme-sync.js` mirroring the palette to `data-theme` + bolted-on specification dashboard at `/specs/`. |
 
 ---
 
